@@ -1,11 +1,19 @@
 let score = 0;
+let level = 1;
 let bombs = [];
 let enemys = [];
+
+const aircraftRef = document.getElementById('aircraft');
+const gameRef = document.getElementById('game');
+const scoreRef = document.getElementById('score');
+const levelRef = document.getElementById('level');
+
 const enemyImages = [
   './images/goodrussian.png',
   './images/grad.png',
   './images/grads.png',
   './images/gradz.png',
+  './images/soilder.png',
   './images/soilder.png',
   './images/soilderboom.png',
   './images/soildercopy.png',
@@ -18,15 +26,15 @@ const enemyImages = [
 ];
 
 function randomEnemy() {
-  return Math.floor(Math.random() * 13);
+  return Math.floor(Math.random() * 14);
 }
 
-document.getElementById('aircraft').addEventListener('click', function () {
+aircraft.addEventListener('click', function () {
   let bomb = document.createElement('div');
   bomb.classList.add('bomb');
   bomb.style.top = this.offsetTop + this.offsetHeight + 'px';
   bomb.style.left = this.offsetLeft + this.offsetWidth / 2 + 'px';
-  document.getElementById('game').appendChild(bomb);
+  gameRef.appendChild(bomb);
   bombs.push(bomb);
 });
 
@@ -45,14 +53,15 @@ function moveBombs() {
   for (let i = 0; i < bombs.length; i++) {
     let bomb = bombs[i];
     bomb.style.top = bomb.offsetTop + 2 + 'px';
-    if (bomb.offsetTop > document.getElementById('game').offsetHeight) {
+    if (bomb.offsetTop > gameRef.offsetHeight) {
       bomb.remove();
       bombs.splice(i, 1);
     }
     for (let j = 0; j < enemys.length; j++) {
       if (isCollision(bomb, enemys[j])) {
         score++;
-        document.getElementById('score').innerHTML = score;
+        scoreRef.innerHTML = score;
+        levelChange();
         bomb.remove();
         bombs.splice(i, 1);
         enemys[j].remove();
@@ -65,9 +74,10 @@ function moveBombs() {
 function createEnemy() {
   let randomInterval = Math.floor(Math.random() * (6000 - 2300 + 1) + 2300);
   setTimeout(function () {
-    let enemy = document.createElement('div');
+    let enemy = document.createElement('img');
+    enemy.setAttribute('src', enemyImages[randomEnemy()]);
     enemy.classList.add('enemy');
-    document.getElementById('game').appendChild(enemy);
+    gameRef.appendChild(enemy);
     enemys.push(enemy);
   }, randomInterval);
 }
@@ -81,6 +91,21 @@ function isCollision(a, b) {
     aRect.left > bRect.right
   );
 }
-setInterval(moveEnemy, 40);
+
+function levelChange() {
+  if (score > 10 && score <= 20) {
+    level = 2;
+  } else if (score > 20 && score <= 30) {
+    level = 3;
+  } else if (score > 30 && score <= 40) {
+    level = 4;
+  } else if (score > 40 && score <= 50) {
+    level = 5;
+  }
+
+  levelRef.innerHTML = level;
+}
+
+setInterval(moveEnemy, 30);
 setInterval(moveBombs, 30);
 setInterval(createEnemy, Math.floor(Math.random() * (6000 - 700 + 1) + 700));
