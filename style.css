@@ -1,0 +1,38 @@
+#game {
+  overflow: hidden;
+  background-color: rgb(111, 197, 214);
+  width: 800px;
+  height: 400px;
+  margin: 0 auto; /* center the game on the screen */
+  position: relative; /* enable position: absolute for children elements */
+}
+#aircraft {
+  display: block;
+
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  top: 10px;
+  left: 20%;
+  margin-left: -25px; /* center the aircraft horizontally */
+}
+.enemy {
+  background-color: rgb(8, 147, 8);
+  width: 80px;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 100%; /* start the tank off the right edge of the screen */
+}
+.bomb {
+  background-image: url(./images/bomb.png);
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 10px); /* center the bomb horizontally under the aircraft */
+}
+.drone {
+  width: 80px;
+}
