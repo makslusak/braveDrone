@@ -1,6 +1,6 @@
 #game {
   overflow: hidden;
-  background-color: rgb(111, 197, 214);
+  background-image: url('./images/bg.png');
   width: 800px;
   height: 400px;
   margin: 0 auto; /* center the game on the screen */
@@ -8,24 +8,21 @@
 }
 #aircraft {
   display: block;
-
   width: 80px;
-  height: 40px;
+
   position: absolute;
   top: 10px;
   left: 20%;
   margin-left: -25px; /* center the aircraft horizontally */
 }
 .enemy {
-  width: 80px;
-
+  width: 150px;
   position: absolute;
   bottom: 0;
   left: 100%; /* start the tank off the right edge of the screen */
 }
 .bomb {
-  background-image: url(./images/bomb.png);
-  background-size: contain;
+  display: block;
   width: 20px;
   height: 20px;
   position: absolute;
@@ -34,4 +31,37 @@
 }
 .drone {
   width: 80px;
+}
+.bgObjects {
+  display: block;
+  position: absolute;
+  width: 100px;
+  left: 100%;
+  bottom: 80px;
+}
+.bgObjects.firstRender.house {
+  left: 300px;
+}
+.bgObjects.firstRender.tree {
+  left: 500px;
+}
+.bgObjects.firstRender.trees {
+  left: 700px;
+}
+.clouds {
+  display: block;
+  position: absolute;
+  width: 200px;
+  top: 30px;
+}
+.clouds.clouda {
+  top: -50px;
+  left: 300px;
+}
+.clouds.cloudb {
+  left: 590px;
+}
+.clouds.cloudc {
+  top: 40px;
+  left: 20px;
 }

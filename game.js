@@ -1,3 +1,5 @@
+import { createbg, moveBg } from './background.js';
+
 let score = 0;
 let level = 1;
 let bombs = [];
@@ -29,8 +31,11 @@ function randomEnemy() {
   return Math.floor(Math.random() * 14);
 }
 
-aircraft.addEventListener('click', function () {
-  let bomb = document.createElement('div');
+aircraftRef.addEventListener('click', function () {
+  let bomb = document.createElement('img');
+  if (level >= 3) {
+    bomb.setAttribute('src', './images/rocket.png');
+  } else bomb.setAttribute('src', './images/bomb.png');
   bomb.classList.add('bomb');
   bomb.style.top = this.offsetTop + this.offsetHeight + 'px';
   bomb.style.left = this.offsetLeft + this.offsetWidth / 2 + 'px';
@@ -59,13 +64,17 @@ function moveBombs() {
     }
     for (let j = 0; j < enemys.length; j++) {
       if (isCollision(bomb, enemys[j])) {
+        enemys[j].setAttribute('src', './images/bang.png');
+
         score++;
         scoreRef.innerHTML = score;
         levelChange();
         bomb.remove();
         bombs.splice(i, 1);
-        enemys[j].remove();
-        enemys.splice(j, 1);
+        setTimeout(() => {
+          enemys[j].remove();
+          enemys.splice(j, 1);
+        }, 100);
       }
     }
   }
@@ -81,6 +90,7 @@ function createEnemy() {
     enemys.push(enemy);
   }, randomInterval);
 }
+
 function isCollision(a, b) {
   let aRect = a.getBoundingClientRect();
   let bRect = b.getBoundingClientRect();
@@ -97,6 +107,7 @@ function levelChange() {
     level = 2;
   } else if (score > 20 && score <= 30) {
     level = 3;
+    aircraftRef.setAttribute('src', './images/bayractar.png');
   } else if (score > 30 && score <= 40) {
     level = 4;
   } else if (score > 40 && score <= 50) {
@@ -109,3 +120,5 @@ function levelChange() {
 setInterval(moveEnemy, 30);
 setInterval(moveBombs, 30);
 setInterval(createEnemy, Math.floor(Math.random() * (6000 - 700 + 1) + 700));
+setInterval(createbg, Math.floor(Math.random() * (22000 - 18000 + 1)) + 18000);
+setInterval(moveBg, 100);
